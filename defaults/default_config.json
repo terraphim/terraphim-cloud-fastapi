@@ -1,0 +1,17 @@
+{
+ "name": "Architect",
+ "relevance_function": "test",
+ "theme": "Theme",
+ "skills": [
+        {
+   "name": "TestSkill",
+   "haystack": "RedisSearch",
+   "haystack_args": "test_arg"
+        },
+        {
+   "name": "RipGrep",
+   "haystack": "RipGrep",
+   "haystack_args": "ripgrep_args"
+        }
+    ]
+}
