@@ -1,0 +1,57 @@
+{
+    "global_shortcut": "Ctrl+X",
+    "roles": {
+      "Architect": {
+        "name": "Architect",
+        "relevance_function": "rust",
+        "theme": "lumen",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Engineer": {
+        "name": "Engineer",
+        "relevance_function": "rust",
+        "theme": "spacelab",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Father": {
+        "name": "Father",
+        "relevance_function": "rust",
+        "theme": "solar",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Gamer": {
+        "name": "Gamer",
+        "relevance_function": "rust",
+        "theme": "darkly",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      }
+    }
+  }
