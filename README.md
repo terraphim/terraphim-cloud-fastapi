@@ -1,6 +1,9 @@
 # terraphim-cloud-fastapi
 FastAPI python and Redis OM backend for Terraphim Cloud 
-
+```
+docker compose up 
+```
+create venv or conda env, install requirements, then:
 ```
 uvicorn main:app --reload
 ```
