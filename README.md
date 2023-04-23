@@ -15,3 +15,8 @@ and `http://127.0.0.1:8000/docs`
 
 populate with test data via data /data/dataloader.py
 
+
+# Install redisstack on MacOS 
+
+```
+brew tap redis-stack/redis-stack

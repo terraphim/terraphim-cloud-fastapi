@@ -5,6 +5,7 @@
         "name": "Architect",
         "relevance_function": "rust",
         "theme": "lumen",
+        "serverUrl":"http://localhost:8000/search",
         "plugins": [
           {
             "hackstack": "~/obsidian/World",
@@ -20,6 +21,23 @@
         "name": "Engineer",
         "relevance_function": "rust",
         "theme": "spacelab",
+        "serverUrl":"http://localhost:8000/search",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Cyber Engineer": {
+        "name": "Cyber Engineer",
+        "relevance_function": "rust",
+        "theme": "nuclear",
+        "serverUrl":"http://localhost:8080/gsearch",
         "plugins": [
           {
             "hackstack": "~/obsidian",
@@ -34,7 +52,7 @@
       "Father": {
         "name": "Father",
         "relevance_function": "rust",
-        "theme": "solar",
+        "theme": "superhero",
         "plugins": [
           {
             "hackstack": "~/obsidian/World",
