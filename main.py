@@ -13,6 +13,7 @@ class SearchQuery(BaseModel):
     search: str
     skip: Optional[int] = None
     limit: Optional[int] = None
+    role: Optional[str] = None
 
 app = FastAPI()
 
@@ -34,10 +35,76 @@ app.add_middleware(
 )
 
 
-
 import os 
-redis = get_redis_connection()
+config_switch=os.getenv('DOCKER', 'local')
+if config_switch=='local':
+    startup_nodes = [{"host": "127.0.0.1", "port": "30001"}, {"host": "127.0.0.1", "port":"30002"}, {"host":"127.0.0.1", "port":"30003"}]
+    host="127.0.0.1"
+    port=9001
+else:
+    startup_nodes = [{"host": "rgcluster", "port": "30001"}, {"host": "rgcluster", "port":"30002"}, {"host":"rgcluster", "port":"30003"}]
+    host="redisgraph"
+    port=6379
+
+redis = get_redis_connection(host=host,port=port,charset="utf-8", decode_responses=True)
+
+#result = redis_graph.query("MATCH (e:entity)-[r]->(t:entity) where (e.role='medical') RETURN DISTINCT e.id,e.name,e.rank, e.role")
+
+import httpimport
+with httpimport.remote_repo(['terraphim_utils'], "https://raw.githubusercontent.com/terraphim/terraphim-platform-automata/main/"):
+    import terraphim_utils
+from terraphim_utils import loadAutomata,find_matches
+
+def load_matcher(url):
+    Automata=loadAutomata(url)
+    return Automata
+
+def match_nodes(search_string, Automata):
+    nodes=set()
+    matched_ents=find_matches(search_string,Automata)
+    nodes = set([node[0] for node in matched_ents])
+    return list(nodes)
+
+def get_edges(nodes, years=None, limits=400,mnodes=set()):
+    """
+    return all edges for the specified nodes, limit hardcoded
+    """
+    links=list()
+    nodes_set=set()
+    years_set=set()
+    print(mnodes)
+    print(limits)
+    redis_graph = redis.graph('cord19medical')
+    if years is not None:
+        print("Graph query node params "+str(nodes))
+        params = {'ids':nodes, 'years':years,'limits':int(limits)}
+        query="""WITH $ids as ids MATCH (e:entity)-[r]->(t:entity) where (e.id in ids) and (r.year in $years) RETURN DISTINCT e.id, t.id, max(r.rank), r.year ORDER BY r.rank DESC LIMIT $limits"""
+        
+    else:
+        params = {'ids':nodes,'limits':int(limits)}
+        print("Graph query node params "+str(nodes))
+        query="""WITH $ids as ids MATCH (e:entity)-[r]->(t:entity) where e.id in ids RETURN DISTINCT e.id, t.id, max(r.rank), r.year ORDER BY r.rank DESC LIMIT $limits"""
+    print(query)
+    result = redis_graph.query(query,params)
+    for record in result.result_set:
+        if record[0] not in mnodes:
+            nodes_set.add(record[0])
+        else:
+            print(f"Node {record[0]} excluded")
+        if record[1] not in mnodes:
+            nodes_set.add(record[1])
+        else:
+            print(f"Node {record[1]} excluded")
+        if record[3]:
+            years_set.add(record[3])
+        if (record[0] in mnodes) or (record[1] in mnodes):
+            continue
+        else: 
+            links.append({'source':record[0],'target':record[1],'rank':record[2],'created_at':str(record[3])})
+    return links, list(nodes_set), list(years_set)
+    
 user = os.getenv('USER','default')
+
 def read_default_config():
     with open('./defaults/desktop_config.json') as f:
         return json.load(f)
@@ -59,6 +126,46 @@ def get_search(search:str, skip: int = 0, limit: int = 10):
 async def search(search:SearchQuery):
     articles = Article.find(Article.body % search.search).all()
     return articles
+
+@app.post("/rsearch")
+async def search(search:SearchQuery):
+    if search.role:
+        role = search.role 
+    else:
+        role = " "
+    print(f"Role {role}")
+    if role == "Medical":
+        Automata=load_matcher("https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma")
+    else:
+        Automata=load_matcher("https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack.lzma")
+
+    nodes=match_nodes(search.search,Automata=Automata)
+    print("Nodes")
+    print(nodes)
+    links,_,_=get_edges(nodes,limits=50)
+    print("Links")
+    print(links)
+    result_table=[]
+    article_set=set()
+    for each_record in links[0:50]:  
+        edge_query=each_record['source']+":"+each_record['target'] 
+        print(edge_query)
+        edge_scored=redis.zrangebyscore(f"edges_scored:{edge_query}",'-inf','inf',0,5)
+        print(edge_scored)
+        if edge_scored:
+            for sentence_key in edge_scored:
+                *head,tail=sentence_key.split(':')
+                article_id=head[1]
+                if article_id not in article_set:
+                    title=redis.hget(f"article_id:{article_id}",'title')
+                    hash_tag=head[-1]
+                    result_table.append({'title':title,'pk':hash_tag,'url':""})
+                    article_set.add(article_id)
+    if result_table:
+        return result_table
+    else:
+        articles = Article.find(Article.body % search.search).all()
+        return articles
 
 @app.get("/config")
 async def config():

@@ -2,3 +2,6 @@ wheel
 uvicorn[standard]
 fastapi
 redis_om
+httpimport==0.7.2
+joblib==1.1.0
+pyahocorasick==1.4.4

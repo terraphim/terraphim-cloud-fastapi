@@ -37,7 +37,23 @@
         "name": "Cyber Engineer",
         "relevance_function": "rust",
         "theme": "nuclear",
-        "serverUrl":"http://localhost:8080/gsearch",
+        "serverUrl":"http://localhost:8000/rsearch",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Medical": {
+        "name": "Medical",
+        "relevance_function": "rust",
+        "theme": "nuclear",
+        "serverUrl":"http://localhost:8000/rsearch",
         "plugins": [
           {
             "hackstack": "~/obsidian",
