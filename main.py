@@ -38,22 +38,55 @@ app.add_middleware(
 import os 
 config_switch=os.getenv('DOCKER', 'local')
 if config_switch=='local':
-    startup_nodes = [{"host": "127.0.0.1", "port": "30001"}, {"host": "127.0.0.1", "port":"30002"}, {"host":"127.0.0.1", "port":"30003"}]
+    cluster_host="127.0.0.1"
+    cluster_port=30001
     host="127.0.0.1"
     port=9001
 else:
-    startup_nodes = [{"host": "rgcluster", "port": "30001"}, {"host": "rgcluster", "port":"30002"}, {"host":"rgcluster", "port":"30003"}]
+    
+    cluster_host = "rgcluster"
+    cluster_port =  30001
     host="redisgraph"
     port=6379
 
 redis = get_redis_connection(host=host,port=port,charset="utf-8", decode_responses=True)
+from redis.cluster import RedisCluster
 
-#result = redis_graph.query("MATCH (e:entity)-[r]->(t:entity) where (e.role='medical') RETURN DISTINCT e.id,e.name,e.rank, e.role")
+rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
+print(rediscluster_client.get_nodes())
 
 import httpimport
 with httpimport.remote_repo(['terraphim_utils'], "https://raw.githubusercontent.com/terraphim/terraphim-platform-automata/main/"):
     import terraphim_utils
 from terraphim_utils import loadAutomata,find_matches
+
+# def process_file(fname, rediscluster_client=rediscluster_client, redis_client=redis_client):
+#     article_id=fname.stem
+#     logger.info("Processing article_id "+ article_id)
+#     if rediscluster_client.sismember('processed_docs_stage1_para', article_id):
+#         logger.info("already processed "+ article_id)
+#         return article_id
+#     try:    
+#         doc=fitz.open(fname)
+#         if doc.metadata["title"]:
+#             title=doc.metadata["title"]
+#         else:
+#             title=fname.stem
+#         url = fname.as_uri()
+#         redis_client.hset(f"article_id:{article_id}",mapping={'title': title})
+#         redis_client.hset(f"article_id:{article_id}",mapping={'url': title})
+
+
+#         article_body=[]
+#         for page in doc:
+#             text = page.get_text().encode("utf8").decode("utf8")
+#             article_body.append(text)
+#             print(text)
+#         rediscluster_client.set(f"paragraphs:{article_id}"," ".join(article_body))
+#         rediscluster_client.sadd('processed_docs_stage1_para',article_id)
+#     except fitz.fitz.FileDataError:
+#         print("Unable to open ", fname)    
+#     return article_id
 
 def load_matcher(url):
     Automata=loadAutomata(url)
@@ -111,6 +144,12 @@ def read_default_config():
 
 @app.post("/article/new")
 def create_article(article: Article):
+    print(article.title)
+    print(article.pk)
+    redis.hset(f"article_id:{article.pk}",mapping={'title': article.title})
+    redis.hset(f"article_id:{article.pk}",mapping={'url': article.url})
+    rediscluster_client.set(f"paragraphs:{article.pk}",article.body)
+    rediscluster_client.sadd('processed_docs_stage1_para',article.pk)
     return article.save()
 
 @app.get("/")
@@ -164,8 +203,9 @@ async def search(search:SearchQuery):
     if result_table:
         return result_table
     else:
-        articles = Article.find(Article.body % search.search).all()
-        return articles
+        # articles = Article.find(Article.body % search.search).all()
+        # return articles
+        return result_table
 
 @app.get("/config")
 async def config():
