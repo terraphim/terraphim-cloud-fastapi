@@ -49,7 +49,7 @@ else:
     host="redisgraph"
     port=6379
 
-redis = get_redis_connection(host=host,port=port,charset="utf-8", decode_responses=True)
+redis = get_redis_connection(host=host,port=port, decode_responses=True)
 from redis.cluster import RedisCluster
 
 rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
@@ -59,34 +59,6 @@ import httpimport
 with httpimport.remote_repo(['terraphim_utils'], "https://raw.githubusercontent.com/terraphim/terraphim-platform-automata/main/"):
     import terraphim_utils
 from terraphim_utils import loadAutomata,find_matches
-
-# def process_file(fname, rediscluster_client=rediscluster_client, redis_client=redis_client):
-#     article_id=fname.stem
-#     logger.info("Processing article_id "+ article_id)
-#     if rediscluster_client.sismember('processed_docs_stage1_para', article_id):
-#         logger.info("already processed "+ article_id)
-#         return article_id
-#     try:    
-#         doc=fitz.open(fname)
-#         if doc.metadata["title"]:
-#             title=doc.metadata["title"]
-#         else:
-#             title=fname.stem
-#         url = fname.as_uri()
-#         redis_client.hset(f"article_id:{article_id}",mapping={'title': title})
-#         redis_client.hset(f"article_id:{article_id}",mapping={'url': title})
-
-
-#         article_body=[]
-#         for page in doc:
-#             text = page.get_text().encode("utf8").decode("utf8")
-#             article_body.append(text)
-#             print(text)
-#         rediscluster_client.set(f"paragraphs:{article_id}"," ".join(article_body))
-#         rediscluster_client.sadd('processed_docs_stage1_para',article_id)
-#     except fitz.fitz.FileDataError:
-#         print("Unable to open ", fname)    
-#     return article_id
 
 def load_matcher(url):
     Automata=loadAutomata(url)
@@ -148,7 +120,8 @@ def create_article(article: Article):
     print(article.pk)
     redis.hset(f"article_id:{article.pk}",mapping={'title': article.title})
     redis.hset(f"article_id:{article.pk}",mapping={'url': article.url})
-    rediscluster_client.set(f"paragraphs:{article.pk}",article.body)
+    body=' '.join(article.body.split('\n'))
+    rediscluster_client.set(f"paragraphs:{article.pk}",body)
     rediscluster_client.sadd('processed_docs_stage1_para',article.pk)
     return article.save()
 
@@ -176,7 +149,7 @@ async def search(search:SearchQuery):
     if role == "Medical":
         Automata=load_matcher("https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma")
     else:
-        Automata=load_matcher("https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack.lzma")
+        Automata=load_matcher("https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma")
 
     nodes=match_nodes(search.search,Automata=Automata)
     print("Nodes")
@@ -197,8 +170,11 @@ async def search(search:SearchQuery):
                 article_id=head[1]
                 if article_id not in article_set:
                     title=redis.hget(f"article_id:{article_id}",'title')
-                    hash_tag=head[-1]
-                    result_table.append({'title':title,'pk':hash_tag,'url':""})
+                    url=redis.hget(f"article_id:{article_id}",'url')
+                    print(url)
+                    print("body key",f"paragraphs:{article_id}")
+                    body=rediscluster_client.get(f"paragraphs:{article_id}")
+                    result_table.append({'title':title,'pk':article_id,'url': url,'body': body})
                     article_set.add(article_id)
     if result_table:
         return result_table
