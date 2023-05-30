@@ -1,9 +1,11 @@
 from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from redis_om import get_redis_connection
 from models import Article
 import json 
+from fastapi.responses import FileResponse
 
 from typing import Optional
 from pydantic import BaseModel
@@ -16,7 +18,7 @@ class SearchQuery(BaseModel):
     role: Optional[str] = None
 
 app = FastAPI()
-
+app.mount("/assets", StaticFiles(directory="assets",html=True), name='assets')  
 origins = [
     "http://localhost",
     "http://localhost:8080",
@@ -43,7 +45,6 @@ if config_switch=='local':
     host="127.0.0.1"
     port=9001
 else:
-    
     cluster_host = "rgcluster"
     cluster_port =  30001
     host="redisgraph"
@@ -68,7 +69,8 @@ def match_nodes(search_string, Automata):
     nodes=set()
     matched_ents=find_matches(search_string,Automata)
     nodes = set([node[0] for node in matched_ents])
-    return list(nodes)
+    tags={term:id for id, term, _, _, in matched_ents}
+    return list(nodes),tags
 
 def get_edges(nodes, years=None, limits=400,mnodes=set()):
     """
@@ -127,7 +129,7 @@ def create_article(article: Article):
 
 @app.get("/")
 async def root():
-    return {"message": "Hello world"}
+    return FileResponse('assets/index.html', media_type='text/html')
 
 @app.get("/search")
 def get_search(search:str, skip: int = 0, limit: int = 10):
@@ -136,6 +138,8 @@ def get_search(search:str, skip: int = 0, limit: int = 10):
 
 @app.post("/search")
 async def search(search:SearchQuery):
+    if not search.search:
+        return []
     articles = Article.find(Article.body % search.search).all()
     return articles
 
@@ -144,16 +148,18 @@ async def search(search:SearchQuery):
     if search.role:
         role = search.role 
     else:
-        role = " "
+        role = "Default"
     print(f"Role {role}")
-    if role == "Medical":
-        Automata=load_matcher("https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma")
-    else:
-        Automata=load_matcher("https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma")
+    config_str=redis.json().get("user:{user}:config")
+    if not config_str:
+        config_str=jsonable_encoder(read_default_config())
 
-    nodes=match_nodes(search.search,Automata=Automata)
+    Automata=load_matcher(config_str['roles'][role]['automata_url'])
+    nodes, tags =match_nodes(search.search,Automata=Automata)
     print("Nodes")
     print(nodes)
+    print("Matched tags")
+    print(tags)
     links,_,_=get_edges(nodes,limits=50)
     print("Links")
     print(links)
@@ -174,13 +180,14 @@ async def search(search:SearchQuery):
                     print(url)
                     print("body key",f"paragraphs:{article_id}")
                     body=rediscluster_client.get(f"paragraphs:{article_id}")
-                    result_table.append({'title':title,'pk':article_id,'url': url,'body': body})
+                    print("Description key",head)
+                    description=rediscluster_client.hget(":".join(head),tail)
+                    # print(f"Connected terms {hash_tags[each_record['source']]} {hash_tags[each_record['target']]}")
+                    print("Connected terms ")
+                    print(each_record['source'])
+                    print(each_record['target'])
+                    result_table.append({'title':title,'pk':article_id,'url': url,'body': body, 'description':description,"tags":tags,"connected_terms":[each_record['source'],each_record['target']]})
                     article_set.add(article_id)
-    if result_table:
-        return result_table
-    else:
-        # articles = Article.find(Article.body % search.search).all()
-        # return articles
         return result_table
 
 @app.get("/config")
