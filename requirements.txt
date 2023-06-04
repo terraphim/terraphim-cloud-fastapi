@@ -1,7 +1,9 @@
 wheel
-uvicorn[standard]
+uvicorn
+# uvicorn[standard]
 fastapi
 redis_om
+# git+https://github.com/redis/redis-om-python.git@main#egg=redis_om
 httpimport==0.7.2
 joblib==1.1.0
 pyahocorasick==1.4.4

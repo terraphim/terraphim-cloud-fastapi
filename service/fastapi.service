@@ -1,0 +1,26 @@
+[Unit]
+Description=FastAPI uvicorn
+After=network.target
+Requires=redis.service
+
+[Service]
+Type=simple
+
+WorkingDirectory=/fastapiapp/
+PrivateTmp=true
+
+EnvironmentFile=/fastapiapp/.env
+
+ExecStart=/fastapiapp/venv_terraphim_cloud/bin/uvicorn \
+        --proxy-headers \
+        --forwarded-allow-ips='*' \
+        --workers=8 \
+        --host 0.0.0.0 --port=8000 \
+        --no-access-log \
+        main:app
+ExecReload=/bin/kill -HUP ${MAINPID}
+RestartSec=1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
