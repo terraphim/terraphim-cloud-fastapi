@@ -1,5 +1,5 @@
 VERSION 0.7
-PROJECT terraphim/terraphim-cloud-fastapi
+PROJECT applied-knowledge-systems/terraphim-cloud-fastapi
 FROM ubuntu:18.04
 IMPORT ./frontend-svelte AS frontend
 
