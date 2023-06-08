@@ -21,6 +21,7 @@ build-fastapi:
   COPY --dir defaults .
   COPY main.py models.py requirements.txt .
   COPY --dir service .
+  COPY .env .
   RUN python3.8 -m venv ./venv_terraphim_cloud
   RUN /fastapiapp/venv_terraphim_cloud/bin/python3.8 -m pip install -U pip
   RUN /fastapiapp/venv_terraphim_cloud/bin/python3.8 -m pip install -r /fastapiapp/requirements.txt
