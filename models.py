@@ -2,7 +2,11 @@ from redis_om import get_redis_connection, EmbeddedJsonModel, HashModel,JsonMode
 import datetime
 from typing import List, Optional
 
-REDIS_DATA_URL = "redis://localhost:9001"
+#FIXME: change to env variable
+# REDIS_DATA_URL = "redis://localhost:9001"
+host="127.0.0.1"
+port=6379
+
 
 # class Article(HashModel):
 #     title: str = Field(index=True, full_text_search=True)
@@ -21,6 +25,6 @@ class Article(JsonModel):
         default=datetime.datetime.today().strftime("%Y-%m-%d")
     )
     class Meta:
-        database = get_redis_connection(url=REDIS_DATA_URL, decode_responses=True)
+        database = get_redis_connection(host=host,port=port, decode_responses=True)
 
 Migrator().run()
