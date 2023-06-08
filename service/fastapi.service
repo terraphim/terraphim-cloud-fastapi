@@ -9,7 +9,7 @@ Type=simple
 WorkingDirectory=/fastapiapp/
 PrivateTmp=true
 
-EnvironmentFile=/fastapiapp/.env
+#EnvironmentFile=/fastapiapp/.env
 
 ExecStart=/fastapiapp/venv_terraphim_cloud/bin/uvicorn \
         --proxy-headers \

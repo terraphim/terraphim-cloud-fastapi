@@ -37,18 +37,19 @@ app.add_middleware(
 )
 
 
-import os 
-config_switch=os.getenv('DOCKER', 'local')
-if config_switch=='local':
-    cluster_host="127.0.0.1"
-    cluster_port=30001
-    host="127.0.0.1"
-    port=9001
-else:
-    cluster_host = "rgcluster"
-    cluster_port =  30001
-    host="redisgraph"
-    port=6379
+# import os 
+# config_switch=os.getenv('DOCKER', 'local')
+# if config_switch=='local':
+#FIXME: change config
+cluster_host="127.0.0.1"
+cluster_port=30001
+host="127.0.0.1"
+port=6379
+# else:
+#     cluster_host = "rgcluster"
+#     cluster_port =  30001
+#     host="redisgraph"
+#     port=6379
 
 redis = get_redis_connection(host=host,port=port, decode_responses=True)
 from redis.cluster import RedisCluster

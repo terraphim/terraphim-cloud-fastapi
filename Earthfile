@@ -4,7 +4,7 @@ FROM ubuntu:18.04
 IMPORT ./frontend-svelte AS frontend
 
 ci-pipeline:
-  PIPELINE
+  PIPELINE --push
   TRIGGER push main
   TRIGGER pr main
   BUILD +release
@@ -20,15 +20,18 @@ build-fastapi:
   WORKDIR /fastapiapp
   COPY --dir defaults .
   COPY main.py models.py requirements.txt .
+  COPY --dir service .
   RUN python3.8 -m venv ./venv_terraphim_cloud
   RUN /fastapiapp/venv_terraphim_cloud/bin/python3.8 -m pip install -U pip
   RUN /fastapiapp/venv_terraphim_cloud/bin/python3.8 -m pip install -r /fastapiapp/requirements.txt
   SAVE ARTIFACT /fastapiapp /fastapiapp
 
 release:
-  FROM ghcr.io/applied-knowledge-systems/redismod:bionic
+  FROM +build-fastapi
   WORKDIR /fastapiapp
-  COPY +build-fastapi/fastapiapp .
+  # COPY +build-fastapi/fastapiapp .
   COPY frontend+build/dist/assets ./assets
   COPY frontend+build/dist/index.html ./assets/index.html
+  COPY service/fastapi.service /etc/systemd/system/fastapi.service
+  SAVE ARTIFACT /fastapiapp /fastapiapp
   SAVE IMAGE --push ghcr.io/applied-knowledge-systems/terraphim-fastapiapp:bionic
