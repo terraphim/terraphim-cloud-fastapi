@@ -42,7 +42,7 @@ app.add_middleware(
 # if config_switch=='local':
 #FIXME: change config
 cluster_host="127.0.0.1"
-cluster_port=6379
+cluster_port=30001
 host="127.0.0.1"
 port=6379
 # else:
