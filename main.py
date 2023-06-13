@@ -6,7 +6,7 @@ from redis_om import get_redis_connection
 from models import Article
 import json 
 from fastapi.responses import FileResponse
-
+import os
 from typing import Optional
 from pydantic import BaseModel
 
