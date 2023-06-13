@@ -6,7 +6,7 @@
         "name": "Engineer",
         "relevance_function": "rust",
         "theme": "spacelab",
-        "serverUrl":"http://localhost:8000/search",
+        "serverUrl":"/search",
         "plugins": [
           {
             "hackstack": "~/obsidian",
@@ -23,7 +23,7 @@
         "name": "Cyber Engineer",
         "relevance_function": "rust",
         "theme": "nuclear",
-        "serverUrl":"http://localhost:8000/rsearch",
+        "serverUrl":"/rsearch",
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma",
         "plugins": [
           {
@@ -41,7 +41,7 @@
         "name": "Project Manager",
         "relevance_function": "rust",
         "theme": "cosmo",
-        "serverUrl":"http://localhost:8000/rsearch",
+        "serverUrl":"/rsearch",
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_project_manager.csv.gz.lzma",
         "plugins": [
           {
@@ -59,7 +59,7 @@
         "shortname": "lazy-project-manager",
         "relevance_function": "rust",
         "theme": "sandstone",
-        "serverUrl":"http://localhost:8000/rsearch",
+        "serverUrl":"/rsearch",
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_split_project_manager.csv.gz.lzma",
         "plugins": [
           {
@@ -76,7 +76,7 @@
         "name": "Medical",
         "relevance_function": "rust",
         "theme": "minty",
-        "serverUrl":"http://localhost:8000/rsearch",
+        "serverUrl":"/rsearch",
         "automata_url":"https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma",
         "plugins": [
           {
@@ -93,7 +93,7 @@
         "name": "Father",
         "relevance_function": "rust",
         "theme": "superhero",
-        "serverUrl":"http://localhost:8000/search",
+        "serverUrl":"/search",
         "plugins": [
           {
             "hackstack": "~/obsidian/World",
@@ -105,7 +105,7 @@
         "name": "Gamer",
         "relevance_function": "rust",
         "theme": "darkly",
-        "serverUrl":"http://localhost:8000/search",
+        "serverUrl":"/search",
         "plugins": [
           {
             "hackstack": "~/obsidian/World",
