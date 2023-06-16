@@ -15,3 +15,11 @@ for article in articles:
     print(article)
     r = requests.post(server_url, json = article)
     print(f"Created article {article['title']} with ID {r.text}")
+
+with open('org_project.json', encoding='utf-8') as f:
+    articles = json.loads(f.read(),strict=False)
+
+for article in articles:
+    print(article)
+    r = requests.post('http://localhost:8000/article/new', json = article)
+    print(f"Created article {article['title']} with ID {r.text}")
