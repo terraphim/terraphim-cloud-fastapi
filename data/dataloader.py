@@ -21,5 +21,5 @@ with open('org_project.json', encoding='utf-8') as f:
 
 for article in articles:
     print(article)
-    r = requests.post('http://localhost:8000/article/new', json = article)
+    r = requests.post('https://alexmikhalev.terraphim.cloud:8443/article/new', json = article)
     print(f"Created article {article['title']} with ID {r.text}")
