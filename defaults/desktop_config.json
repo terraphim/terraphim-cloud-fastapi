@@ -59,7 +59,8 @@
         "shortname": "lazy-project-manager",
         "relevance_function": "rust",
         "theme": "sandstone",
-        "serverUrl":"/rsearch",
+        "serverUrl":"https://alexmikhalev.terraphim.cloud:8443/rsearch",
+        "enableLogseq": true,
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_split_project_manager.csv.gz.lzma",
         "plugins": [
           {

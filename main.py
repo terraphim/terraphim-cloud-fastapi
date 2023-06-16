@@ -55,8 +55,8 @@ port=6379
 redis = get_redis_connection(host=host,port=port, decode_responses=True)
 from redis.cluster import RedisCluster
 
-rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
-print(rediscluster_client.get_nodes())
+
+# print(rediscluster_client.get_nodes())
 
 import httpimport
 with httpimport.remote_repo(['terraphim_utils'], "https://raw.githubusercontent.com/terraphim/terraphim-platform-automata/main/"):
@@ -78,6 +78,7 @@ def get_edges(nodes, years=None, limits=400,mnodes=set()):
     """
     return all edges for the specified nodes, limit hardcoded
     """
+    rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
     links=list()
     nodes_set=set()
     years_set=set()
@@ -120,6 +121,7 @@ def read_default_config():
 
 @app.post("/article/new")
 def create_article(article: Article):
+    rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
     print(article.title)
     print(article.pk)
     redis.hset(f"article_id:{article.pk}",mapping={'title': article.title})
@@ -147,6 +149,7 @@ async def search(search:SearchQuery):
 
 @app.post("/rsearch")
 async def search(search:SearchQuery):
+    rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
     if search.role:
         role = search.role 
     else:

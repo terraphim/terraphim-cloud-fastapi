@@ -20,3 +20,8 @@ populate with test data via data /data/dataloader.py
 
 ```
 brew tap redis-stack/redis-stack
+
+
+Test for Lazy Project Manager:
+"project retrospective enabler"
+"project quality processes"
