@@ -42,7 +42,7 @@
         "relevance_function": "rust",
         "theme": "cosmo",
         "serverUrl":"/rsearch",
-        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_project_manager.csv.gz.lzma",
+        "automata_url":"https://terraphim-prod.s3.eu-west-2.amazonaws.com/project_manager_term_to_id.csv.gz.lzma",
         "plugins": [
           {
             "hackstack": "~/obsidian",
@@ -61,24 +61,7 @@
         "theme": "sandstone",
         "serverUrl":"https://alexmikhalev.terraphim.cloud:8443/rsearch",
         "enableLogseq": true,
-        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_split_project_manager.csv.gz.lzma",
-        "plugins": [
-          {
-            "hackstack": "~/obsidian",
-            "name": "terraphim-grep"
-          },
-          {
-            "hackstack": "~/obsidian/World",
-            "name": "terraphim-grep"
-          }
-        ]
-      },
-      "Medical": {
-        "name": "Medical",
-        "relevance_function": "rust",
-        "theme": "minty",
-        "serverUrl":"/rsearch",
-        "automata_url":"https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma",
+        "automata_url":"https://terraphim-prod.s3.eu-west-2.amazonaws.com/project_manager_lazy_term_to_id.csv.gz.lzma",
         "plugins": [
           {
             "hackstack": "~/obsidian",
