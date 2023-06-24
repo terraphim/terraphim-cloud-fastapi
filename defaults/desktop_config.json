@@ -1,30 +1,12 @@
 {
     "global_shortcut": "Ctrl+X",
     "roles": {
-      "Engineer": {
-        "shortname": "engineer",
-        "name": "Engineer",
+      "Default": {
+        "shortname": "default",
+        "name": "default",
         "relevance_function": "rust",
         "theme": "spacelab",
         "serverUrl":"/search",
-        "plugins": [
-          {
-            "hackstack": "~/obsidian",
-            "name": "terraphim-grep"
-          },
-          {
-            "hackstack": "~/obsidian/World",
-            "name": "terraphim-grep"
-          }
-        ]
-      },
-      "Cyber Engineer": {
-        "shortname": "cyber",
-        "name": "Cyber Engineer",
-        "relevance_function": "rust",
-        "theme": "nuclear",
-        "serverUrl":"/rsearch",
-        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma",
         "plugins": [
           {
             "hackstack": "~/obsidian",
@@ -59,9 +41,44 @@
         "shortname": "lazy-project-manager",
         "relevance_function": "rust",
         "theme": "sandstone",
-        "serverUrl":"https://alexmikhalev.terraphim.cloud:8443/rsearch",
+        "serverUrl":"/rsearch",
         "enableLogseq": true,
         "automata_url":"https://terraphim-prod.s3.eu-west-2.amazonaws.com/project_manager_lazy_term_to_id.csv.gz.lzma",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Engineer": {
+        "shortname": "engineer",
+        "name": "Engineer",
+        "relevance_function": "rust",
+        "theme": "spacelab",
+        "serverUrl":"/search",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
+      "Cyber Engineer": {
+        "shortname": "cyber",
+        "name": "Cyber Engineer",
+        "relevance_function": "rust",
+        "theme": "nuclear",
+        "serverUrl":"/rsearch",
+        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma",
         "plugins": [
           {
             "hackstack": "~/obsidian",

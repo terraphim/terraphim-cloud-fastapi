@@ -1,10 +1,11 @@
 import json
 import requests
 import sys
-if sys.argv[1]:
+if len(sys.argv)>1:
     server_url = sys.argv[1]
 else:
-    server_url = "https://alexmikhalev.terraphim.cloud:8443/article/new"
+    server_url = "https://alexmikhalev.terraphim.cloud/article/new"
+
 with open('ref_arch.json', encoding='utf-8') as f:
     articles = json.loads(f.read())
 
@@ -25,5 +26,5 @@ with open('org_project.json', encoding='utf-8') as f:
 
 for article in articles:
     print(article)
-    r = requests.post('https://alexmikhalev.terraphim.cloud:8443/article/new', json = article)
+    r = requests.post(server_url, json = article)
     print(f"Created article {article['title']} with ID {r.text}")
