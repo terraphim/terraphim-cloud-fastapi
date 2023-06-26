@@ -24,6 +24,7 @@
         "relevance_function": "rust",
         "theme": "cosmo",
         "serverUrl":"/rsearch",
+        "matcherMapUrl":"",
         "automata_url":"https://terraphim-prod.s3.eu-west-2.amazonaws.com/project_manager_term_to_id.csv.gz.lzma",
         "plugins": [
           {
