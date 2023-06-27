@@ -28,3 +28,11 @@ for article in articles:
     print(article)
     r = requests.post(server_url, json = article)
     print(f"Created article {article['title']} with ID {r.text}")
+
+with open('project_manager_CV.json', encoding='utf-8') as f:
+    articles = json.loads(f.read(),strict=False)
+
+for article in articles:
+    print(article)
+    r = requests.post(server_url, json = article)
+    print(f"Created article {article['title']} with ID {r.text}")
