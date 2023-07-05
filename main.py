@@ -119,7 +119,7 @@ def read_default_config():
     with open('./defaults/desktop_config.json') as f:
         return json.load(f)
 
-@app.post("/article/new")
+@app.post("/article/")
 def create_article(article: Article):
     rediscluster_client = RedisCluster(host=cluster_host, port=cluster_port, decode_responses=True)
     print(article.title)

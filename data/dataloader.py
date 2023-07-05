@@ -4,7 +4,7 @@ import sys
 if len(sys.argv)>1:
     server_url = sys.argv[1]
 else:
-    server_url = "https://alexmikhalev.terraphim.cloud/article/new"
+    server_url = "https://alexmikhalev.terraphim.cloud/article/"
 
 with open('ref_arch.json', encoding='utf-8') as f:
     articles = json.loads(f.read())
