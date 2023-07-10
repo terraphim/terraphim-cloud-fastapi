@@ -12,9 +12,9 @@ ci-pipeline:
 build-fastapi:
   FROM ghcr.io/applied-knowledge-systems/redismod:bionic
   RUN apt remove python-pip
-  RUN apt install -y python3-pip
-  RUN apt-get install -y python3-venv
-  RUN apt-get install -y python3.8-minimal python3.8-dev python3.8-venv
+  RUN apt install -y --no-install-recommends python3-pip
+  RUN apt-get install -y --no-install-recommends  python3-venv
+  RUN apt-get install -y --no-install-recommends python3.8-minimal python3.8-dev python3.8-venv
   RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 10
   RUN python3.8 -m pip install pip
   WORKDIR /fastapiapp
