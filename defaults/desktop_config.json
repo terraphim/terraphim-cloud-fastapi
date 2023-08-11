@@ -18,13 +18,30 @@
           }
         ]
       },
+      "Project Manager": {
+        "shortname": "project-manager",
+        "name": "Project Manager",
+        "relevance_function": "rust",
+        "theme": "cosmo",
+        "serverUrl":"/rsearch",
+        "automata_url":"https://project-manager-terraphim-kg-ci.s3.eu-west-2.amazonaws.com/term_to_id.csv.gz",
+        "plugins": [
+          {
+            "hackstack": "~/obsidian",
+            "name": "terraphim-grep"
+          },
+          {
+            "hackstack": "~/obsidian/World",
+            "name": "terraphim-grep"
+          }
+        ]
+      },
       "Operator": {
         "shortname": "operator",
         "name": "System Operator",
         "relevance_function": "rust",
         "theme": "lumen",
         "serverUrl":"/rsearch",
-        "matcherMapUrl":"",
         "automata_url":"https://system-operator.s3.eu-west-2.amazonaws.com/term_to_id.csv.gz",
         "plugins": [
           {
