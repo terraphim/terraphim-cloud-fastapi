@@ -36,3 +36,9 @@ release:
   COPY service/fastapi.service /etc/systemd/system/fastapi.service
   SAVE ARTIFACT /fastapiapp /fastapiapp
   SAVE IMAGE --push ghcr.io/applied-knowledge-systems/terraphim-fastapiapp:bionic
+
+save-fe-local:
+  FROM +build-fastapi
+  COPY frontend+build/dist/assets ./assets
+  COPY frontend+build/dist/index.html ./assets/index.html
+  SAVE ARTIFACT ./assets AS LOCAL ./assets
