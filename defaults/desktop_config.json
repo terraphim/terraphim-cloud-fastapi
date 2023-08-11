@@ -9,11 +9,11 @@
         "serverUrl":"/search",
         "plugins": [
           {
-            "haystack": "~/obsidian",
+            "hackstack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "haystack": "~/obsidian/World",
+            "hackstack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -28,82 +28,11 @@
         "automata_url":"https://system-operator.s3.eu-west-2.amazonaws.com/term_to_id.csv.gz",
         "plugins": [
           {
-            "haystack": "~/obsidian",
+            "hackstack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "haystack": "~/obsidian/World",
-            "name": "terraphim-grep"
-          }
-        ]
-      },
-      "Cyber Engineer": {
-        "shortname": "cyber",
-        "name": "Cyber Engineer",
-        "relevance_function": "rust",
-        "theme": "nuclear",
-        "serverUrl":"/rsearch",
-        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma",
-        "plugins": [
-          {
-            "haystack": "~/obsidian",
-            "name": "terraphim-grep"
-          },
-          {
-            "haystack": "~/obsidian/World",
-            "name": "terraphim-grep"
-          }
-        ]
-      },
-      "Project Manager": {
-        "shortname": "project-manager",
-        "name": "Project Manager",
-        "relevance_function": "rust",
-        "theme": "cosmo",
-        "serverUrl":"/rsearch",
-        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_project_manager.csv.gz.lzma",
-        "plugins": [
-          {
-            "haystack": "~/obsidian",
-            "name": "terraphim-grep"
-          },
-          {
-            "haystack": "~/obsidian/World",
-            "name": "terraphim-grep"
-          }
-        ]
-      },
-      "Lazy Project Manager": {
-        "name": "Lazy Project Manager",
-        "shortname": "lazy-project-manager",
-        "relevance_function": "rust",
-        "theme": "sandstone",
-        "serverUrl":"/rsearch",
-        "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_lazy_project_manager.csv.gz.lzma",
-        "plugins": [
-          {
-            "haystack": "~/obsidian",
-            "name": "terraphim-grep"
-          },
-          {
-            "haystack": "~/obsidian/World",
-            "name": "terraphim-grep"
-          }
-        ]
-      },
-      "Medical": {
-        "name": "Medical",
-        "relevance_function": "rust",
-        "theme": "minty",
-        "serverUrl":"/rsearch",
-        "automata_url":"https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma",
-        "plugins": [
-          {
-            "haystack": "~/obsidian",
-            "name": "terraphim-grep"
-          },
-          {
-            "haystack": "~/obsidian/World",
+            "hackstack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -115,7 +44,7 @@
         "serverUrl":"/search",
         "plugins": [
           {
-            "haystack": "~/obsidian/World",
+            "hackstack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -127,7 +56,7 @@
         "serverUrl":"/search",
         "plugins": [
           {
-            "haystack": "~/obsidian/World",
+            "hackstack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
