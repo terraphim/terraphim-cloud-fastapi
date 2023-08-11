@@ -21,18 +21,17 @@ for article in articles:
     r = requests.post(server_url, json = article)
     print(f"Created article {article['title']} with ID {r.text}")
 
-with open('org_project.json', encoding='utf-8') as f:
+with open('system_operator.json', encoding='utf-8') as f:
     articles = json.loads(f.read(),strict=False)
 
 for article in articles:
-    print(article)
+    # print(article)
     r = requests.post(server_url, json = article)
-    print(f"Created article {article['title']} with ID {r.text}")
+    print(f"Created article {article['title']}")
 
-with open('project_manager_CV.json', encoding='utf-8') as f:
-    articles = json.loads(f.read(),strict=False)
-
-for article in articles:
-    print(article)
-    r = requests.post(server_url, json = article)
-    print(f"Created article {article['title']} with ID {r.text}")
+# with open('project_manager_CV.json', encoding='utf-8') as f:
+#     articles = json.loads(f.read(),strict=False)
+#     for article in articles:
+#         print(article)
+#         r = requests.post(server_url, json = article)
+#         print(f"Created article {article['title']} with ID {r.text}")
