@@ -9,11 +9,11 @@
         "serverUrl":"/search",
         "plugins": [
           {
-            "hackstack": "~/obsidian",
+            "haystack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -28,11 +28,11 @@
         "automata_url":"https://system-operator.s3.eu-west-2.amazonaws.com/term_to_id.csv.gz",
         "plugins": [
           {
-            "hackstack": "~/obsidian",
+            "haystack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -46,11 +46,11 @@
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_cyberattack_tolower.lzma",
         "plugins": [
           {
-            "hackstack": "~/obsidian",
+            "haystack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -64,11 +64,11 @@
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_project_manager.csv.gz.lzma",
         "plugins": [
           {
-            "hackstack": "~/obsidian",
+            "haystack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -82,11 +82,11 @@
         "automata_url":"https://terraphim-automata.s3.eu-west-2.amazonaws.com/automata_lazy_project_manager.csv.gz.lzma",
         "plugins": [
           {
-            "hackstack": "~/obsidian",
+            "haystack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -99,11 +99,11 @@
         "automata_url":"https://s3.eu-west-2.amazonaws.com/assets.thepattern.digital/automata_fresh_semantic.pkl.lzma",
         "plugins": [
           {
-            "hackstack": "~/obsidian",
+            "haystack": "~/obsidian",
             "name": "terraphim-grep"
           },
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -115,7 +115,7 @@
         "serverUrl":"/search",
         "plugins": [
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
@@ -127,7 +127,7 @@
         "serverUrl":"/search",
         "plugins": [
           {
-            "hackstack": "~/obsidian/World",
+            "haystack": "~/obsidian/World",
             "name": "terraphim-grep"
           }
         ]
